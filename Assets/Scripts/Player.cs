@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         player = GetComponent<Rigidbody>();
+        SceneManager.LoadScene("Outside");
     }
 
     private void Awake()

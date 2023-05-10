@@ -13,7 +13,6 @@ public class MenuUI : MonoBehaviour
         CanvasObject = GetComponent<Canvas>();
         CanvasObject.enabled = !CanvasObject.enabled;
         Cursor.lockState = CursorLockMode.Locked;
-        //SceneManager.LoadScene("Open");
 
     }
 

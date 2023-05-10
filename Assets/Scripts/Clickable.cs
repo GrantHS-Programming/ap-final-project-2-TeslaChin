@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,10 +12,10 @@ public class Clickable : MonoBehaviour
     }
     IEnumerator LoadScene()
     {
-        if (SceneManager.GetActiveScene().name.Equals("Open"))
-            asyncLoad = SceneManager.LoadSceneAsync("Main");
+        if (SceneManager.GetActiveScene().name.Equals("Inside"))
+            asyncLoad = SceneManager.LoadSceneAsync("Outside");
         else
-            asyncLoad = SceneManager.LoadSceneAsync("Open");
+            asyncLoad = SceneManager.LoadSceneAsync("Inside");
 
 
 
@@ -25,6 +25,6 @@ public class Clickable : MonoBehaviour
             yield return null;
         }
     }
-}
+}*/
 //https://www.reddit.com/r/godot/comments/uvu1l2/comment/i9os0l8/
 //https://medium.com/geekculture/unity-shorts-2-clicking-on-a-3d-object-2f37db248f7d

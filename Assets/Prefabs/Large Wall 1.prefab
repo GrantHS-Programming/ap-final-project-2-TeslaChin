@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2389434656544343247}
   - component: {fileID: 6671064890225213049}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Large Wall 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
