@@ -5,17 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class DoorMove : MonoBehaviour
 {
-    public GameObject innerDoor;
-    public GameObject outerDoor;
-    bool inside = true;
+    public GameObject innerDoor1;
+    public GameObject innerDoor2;
+    public GameObject outerDoor1;
+    public GameObject outerDoor2;
+    static bool inside = true;
+    
     private void OnMouseDown()
     {
         if (inside)
         {
             int x = 0;
             while (x < 100) { 
-                innerDoor.transform.Translate(0, 0, .01f);
-                outerDoor.transform.Translate(0, 0, -.01f);
+                innerDoor1.transform.Translate(0, 0, .01f);
+                innerDoor2.transform.Translate(0, 0, .01f);
+                outerDoor1.transform.Translate(0, 0, -.01f);
+                outerDoor2.transform.Translate(0, 0, -.01f);
                 x++;
             }
             inside = false;
@@ -25,8 +30,10 @@ public class DoorMove : MonoBehaviour
             int x = 0;
             while (x < 100)
             {
-                innerDoor.transform.Translate(0, 0, -1);
-                outerDoor.transform.Translate(0, 0, 1);
+                innerDoor1.transform.Translate(0, 0, -.01f);
+                innerDoor2.transform.Translate(0, 0, -.01f);
+                outerDoor1.transform.Translate(0, 0, .01f);
+                outerDoor2.transform.Translate(0, 0, .01f);
                 x++;
             }
             inside = true;
