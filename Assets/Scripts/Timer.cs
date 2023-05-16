@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
+    public static double counter = 0;
     static int sol = 0;
     static int hour = 0;
     static double minute = 0;
@@ -18,6 +19,7 @@ public class Timer : MonoBehaviour
 
     void FixedUpdate()
     {
+        counter += Time.deltaTime;
         if (minute < 10)
             textMeshPro.text = "Sol " + sol + " " + hour + ":" + "0" + (int)minute;
         else

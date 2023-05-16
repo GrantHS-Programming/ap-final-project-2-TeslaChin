@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class StartUI : MonoBehaviour
 {
-    private Canvas Canvas;
+/*    private Canvas Canvas;
     [SerializeField] private Button startButton;
     public static bool started = true;
     void Start()
@@ -18,5 +18,5 @@ public class StartUI : MonoBehaviour
     {
         started = true;
         Canvas.enabled = false;
-    }
+    }*/
 }

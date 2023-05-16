@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
             right = true;
         
 
-        if (!MenuUI.menuOpen && StartUI.started)
+        if (!MenuUI.menuOpen /*&& StartUI.started*/)
         {
             float mouse = mouseSpeed * Input.GetAxis("Mouse X");
             transform.Rotate(0, mouse, 0);
@@ -64,7 +64,8 @@ public class Player : MonoBehaviour
         camF = camF.normalized;
         camR = camR.normalized;
 
-        if (!MenuUI.menuOpen && StartUI.started) {
+        if (!MenuUI.menuOpen /*&& StartUI.started*/)
+        {
             if (forward)
             {
                 GetComponent<Rigidbody>().AddForce(camF / 2, ForceMode.VelocityChange);

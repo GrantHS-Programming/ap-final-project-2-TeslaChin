@@ -12,7 +12,7 @@ public class Camera : MonoBehaviour
     void Update()
     {
 
-        if (!MenuUI.menuOpen && StartUI.started)
+        if (!MenuUI.menuOpen /*&& StartUI.started*/)
         {
             facing = cam.transform.localRotation.eulerAngles.x;
             float v = mouseSpeed * Input.GetAxis("Mouse Y");
