@@ -9,6 +9,8 @@ public class DoorMove : MonoBehaviour
     public GameObject innerDoor2;
     public GameObject outerDoor1;
     public GameObject outerDoor2;
+    public GameObject player;
+    //distance https://answers.unity.com/questions/1433786/calculate-distance-between-player-on-object.html
     static bool inside = true;
     
     private void OnMouseDown()
