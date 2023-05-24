@@ -109,8 +109,8 @@ GameObject:
   - component: {fileID: 4196357113690795656}
   - component: {fileID: 4420802969587639925}
   - component: {fileID: 6168319908027354161}
-  - component: {fileID: 539040846550817732}
   - component: {fileID: 5291571988443253931}
+  - component: {fileID: 5725482502360496556}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Untagged
@@ -203,19 +203,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!135 &539040846550817732
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4461415184256269034}
-  m_Material: {fileID: 13400000, guid: c3082a74624d9fc4f9b41bb8a3b7543c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5291571988443253931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,6 +217,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 4461415184256269034}
   target: {fileID: 0}
+--- !u!136 &5725482502360496556
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4461415184256269034}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.50000006
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4521509869629119193
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,10 +12,15 @@ public class DoorMove : MonoBehaviour
     public GameObject player;
     //distance https://answers.unity.com/questions/1433786/calculate-distance-between-player-on-object.html
     static bool inside = true;
-    
+    float distance;
+    private void Update()
+    {
+        distance = Vector3.Distance(player.transform.position, transform.position);
+    }
+
     private void OnMouseDown()
     {
-        if (inside)
+        if (inside && distance<2)
         {
             int x = 0;
             while (x < 100) { 
@@ -27,7 +32,7 @@ public class DoorMove : MonoBehaviour
             }
             inside = false;
         }
-        else if (!inside)
+        else if (!inside && distance<2)
         {
             int x = 0;
             while (x < 100)
