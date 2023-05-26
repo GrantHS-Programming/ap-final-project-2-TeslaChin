@@ -16,9 +16,12 @@ public class Player : MonoBehaviour
     bool spacePressed;
     float mouseSpeed = 4.0f;
     public Rigidbody player;
-
+    int health = 2200;
+    int coll = 0;
+    public GameObject bar;
     public Transform cam;
     Vector2 input;
+    public static bool dead = false;
 
     void Start()
     {
@@ -39,12 +42,41 @@ public class Player : MonoBehaviour
             right = true;
         
 
-        if (!MenuUI.menuOpen /*&& StartUI.started*/)
+        if (!MenuUI.menuOpen && !dead /*&& StartUI.started*/)
         {
             float mouse = mouseSpeed * Input.GetAxis("Mouse X");
             transform.Rotate(0, mouse, 0);
         }
+        
+        if (health <= 0)
+        {
+            StartCoroutine(waiter());
+        }
+    }
+    IEnumerator waiter()
+    {
+        dead = true;
+        player.constraints = RigidbodyConstraints.None;
+        //Time.timeScale = .5f;
+        yield return new WaitForSeconds(4);
+        //player.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
 
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ghost")
+        {
+            coll++;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ghost")
+        {
+            coll--;
+        }
     }
     void FixedUpdate()
     {
@@ -59,7 +91,7 @@ public class Player : MonoBehaviour
         camF = camF.normalized;
         camR = camR.normalized;
 
-        if (!MenuUI.menuOpen /*&& StartUI.started*/)
+        //if (!MenuUI.menuOpen /*&& StartUI.started*/)
         {
             if (forward)
             {
@@ -80,6 +112,13 @@ public class Player : MonoBehaviour
             {
                 GetComponent<Rigidbody>().AddForce(-camR / 2, ForceMode.VelocityChange);
                 left = false;
+            }
+
+            //if (coll)
+            {
+                health-=coll*20;
+                var barRectTransform = bar.transform as RectTransform;
+                barRectTransform.sizeDelta = new Vector2(health, barRectTransform.sizeDelta.y);
             }
 
             if (Physics.OverlapSphere(checkGround.position, 0.1f, playerMask).Length == 1)

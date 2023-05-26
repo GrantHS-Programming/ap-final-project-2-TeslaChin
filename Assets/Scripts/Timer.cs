@@ -13,15 +13,19 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        textMeshPro.text = "Some text";
+        textMeshPro.text = "";
     }
 
 
     void FixedUpdate()
     {
         counter += Time.deltaTime;
-        if (minute < 10)
+        if (minute < 10 && hour<10)
+            textMeshPro.text = "Sol " + sol + " 0" + hour + ":" + "0" + (int)minute;
+        else if (minute<10)
             textMeshPro.text = "Sol " + sol + " " + hour + ":" + "0" + (int)minute;
+        else if (hour < 10)
+            textMeshPro.text = "Sol " + sol + " 0" + hour + ":" + (int)minute;
         else
             textMeshPro.text = "Sol " + sol + " " + hour + ":" + (int)minute;
         if (!MenuUI.menuOpen)
