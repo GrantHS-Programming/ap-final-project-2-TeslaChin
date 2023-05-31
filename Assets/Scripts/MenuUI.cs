@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class MenuUI : MonoBehaviour
 {
-    private Canvas CanvasObject;
+    private Canvas Menu;
     public static bool menuOpen = false;
 
     void Start()
     {
-        CanvasObject = GetComponent<Canvas>();
-        CanvasObject.enabled = !CanvasObject.enabled;
+        Menu = GetComponent<Canvas>();
+        Menu.enabled = !Menu.enabled;
         Cursor.lockState = CursorLockMode.Locked;
 
     }
@@ -20,7 +20,7 @@ public class MenuUI : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            CanvasObject.enabled = !CanvasObject.enabled;
+            Menu.enabled = !Menu.enabled;
             menuOpen = !menuOpen;
             if (menuOpen)
             {

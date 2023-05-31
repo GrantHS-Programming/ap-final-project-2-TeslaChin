@@ -9,23 +9,33 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private Transform checkGround = null;
     [SerializeField] private LayerMask playerMask;
-    bool left;
-    bool right;
-    bool forward;
-    bool backward;
+    bool moveLeft;
+    bool moveRight;
+    bool moveForward;
+    bool moveBackward;
     bool spacePressed;
-    float mouseSpeed = 4.0f;
     public Rigidbody player;
-    int health = 2200;
-    int coll = 0;
-    public GameObject bar;
+
+    float mouseSpeed = 4.0f;
     public Transform cam;
     Vector2 input;
+
+    int health = 2200;
+    int coll = 0;
+    public GameObject healthBar;
     public static bool dead = false;
+    public Canvas endScreen;
+    public Canvas menu;
+
+    int stamina = 2200;
+    int run = 1;
+    public GameObject stamBar;
+
 
     void Start()
     {
         player = GetComponent<Rigidbody>();
+        endScreen.enabled = false;
     }
 
     void Update()
@@ -33,14 +43,15 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
             spacePressed = true;
         if (Input.GetKey(KeyCode.E))
-            forward = true;
+            moveForward = true;
         if (Input.GetKey(KeyCode.D))
-            backward = true;
+            moveBackward = true;
         if (Input.GetKey(KeyCode.S))
-            left = true;
+            moveLeft = true;
         if (Input.GetKey(KeyCode.F))
-            right = true;
-        
+            moveRight = true;
+        if (Input.GetKey(KeyCode.W))
+            run = 2;
 
         if (!MenuUI.menuOpen && !dead /*&& StartUI.started*/)
         {
@@ -48,22 +59,35 @@ public class Player : MonoBehaviour
             transform.Rotate(0, mouse, 0);
         }
         
-        if (health <= 0)
+        if (health <= 0 && !dead)
         {
-            StartCoroutine(waiter());
+            StartCoroutine(death());
         }
     }
-    IEnumerator waiter()
+
+    IEnumerator death()
     {
         dead = true;
         player.constraints = RigidbodyConstraints.None;
-        //Time.timeScale = .5f;
-        yield return new WaitForSeconds(4);
-        //player.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+        menu.enabled = false;
+        /*
+        Time.timeScale = .5f;
+        Time.fixedDeltaTime = .02f * Time.timeScale;
+        yield return new WaitForSecondsRealtime(6);
+        */
+        for (float i= 1; i>=0; i-=.01f)
+        {
+            Time.timeScale = i;
+            Time.fixedDeltaTime = .02f * Time.timeScale;
+            yield return new WaitForSecondsRealtime(.05f);
+        }
+
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
+        endScreen.enabled = true;
 
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Ghost")
@@ -71,6 +95,7 @@ public class Player : MonoBehaviour
             coll++;
         }
     }
+
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "Ghost")
@@ -78,6 +103,7 @@ public class Player : MonoBehaviour
             coll--;
         }
     }
+
     void FixedUpdate()
     {
 
@@ -91,42 +117,49 @@ public class Player : MonoBehaviour
         camF = camF.normalized;
         camR = camR.normalized;
 
-        //if (!MenuUI.menuOpen /*&& StartUI.started*/)
+        if (stamina <= 0)
+            run = 1;
+        if (run == 2 && (moveBackward || moveForward || moveLeft || moveRight))
+            stamina -= 10;
+        else
+            stamina ++;
+
+        if (moveForward)
         {
-            if (forward)
-            {
-                GetComponent<Rigidbody>().AddForce(camF / 2, ForceMode.VelocityChange);
-                forward = false;
-            }
-            if (backward)
-            {
-                GetComponent<Rigidbody>().AddForce(-camF / 2, ForceMode.VelocityChange);
-                backward = false;
-            }
-            if (right)
-            {
-                GetComponent<Rigidbody>().AddForce(camR / 2, ForceMode.VelocityChange);
-                right = false;
-            }
-            if (left)
-            {
-                GetComponent<Rigidbody>().AddForce(-camR / 2, ForceMode.VelocityChange);
-                left = false;
-            }
-
-            //if (coll)
-            {
-                health-=coll*20;
-                var barRectTransform = bar.transform as RectTransform;
-                barRectTransform.sizeDelta = new Vector2(health, barRectTransform.sizeDelta.y);
-            }
-
-            if (Physics.OverlapSphere(checkGround.position, 0.1f, playerMask).Length == 1)
-                spacePressed = false;
-            if (spacePressed)
-                player.velocity = new Vector3(0, 5, 0);
+            GetComponent<Rigidbody>().AddForce(camF / 3 * run, ForceMode.VelocityChange);
+            moveForward = false;
+            run = 1;
+        }
+        if (moveBackward)
+        {
+            GetComponent<Rigidbody>().AddForce(-camF / 3 * run, ForceMode.VelocityChange);
+            moveBackward = false;
+            run = 1;
+        }
+        if (moveRight)
+        {
+            GetComponent<Rigidbody>().AddForce(camR / 3 * run, ForceMode.VelocityChange);
+            moveRight = false;
+            run = 1;
+        }
+        if (moveLeft)
+        {
+            GetComponent<Rigidbody>().AddForce(-camR / 3 * run, ForceMode.VelocityChange);
+            moveLeft = false;
+            run = 1;
         }
 
+        health-=coll*20;
+        var hBarRectTransform = healthBar.transform as RectTransform;
+        hBarRectTransform.sizeDelta = new Vector2(health, hBarRectTransform.sizeDelta.y);
+        var sBarRectTransform = stamBar.transform as RectTransform;
+        sBarRectTransform.sizeDelta = new Vector2(stamina, sBarRectTransform.sizeDelta.y);
+            
+
+        if (Physics.OverlapSphere(checkGround.position, 0.1f, playerMask).Length == 1)
+            spacePressed = false;
+        if (spacePressed)
+            player.velocity = new Vector3(0, 5, 0);
     }
 
 }

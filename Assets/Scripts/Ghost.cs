@@ -47,7 +47,7 @@ public class Ghost : MonoBehaviour
             random += Random.Range(15, 20);
             Instantiate(ghost, target.transform.position + distance, Quaternion.identity);
         }
-        var step = Time.deltaTime;
+        var step = Time.deltaTime *2;
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, step);
         transform.LookAt(target.transform);
     }
