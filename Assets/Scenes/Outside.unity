@@ -10688,6 +10688,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 236196416}
+    - target: {fileID: 6168319908027354161, guid: 09d2370974bb4864d82329ff10143c8c, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9187715518309691088, guid: 09d2370974bb4864d82329ff10143c8c, type: 3}
       propertyPath: m_RootOrder
       value: 3
