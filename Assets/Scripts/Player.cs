@@ -53,13 +53,8 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
             run = 2;
 
-        if (!MenuUI.menuOpen && !dead /*&& StartUI.started*/)
-        {
-            float mouse = mouseSpeed * Input.GetAxis("Mouse X");
-            transform.Rotate(0, mouse, 0);
-        }
         
-        if (health <= 0 && !dead)
+        if ((health <= 0 || player.position.y <= -50) && !dead)
         {
             StartCoroutine(death());
         }
@@ -70,11 +65,6 @@ public class Player : MonoBehaviour
         dead = true;
         player.constraints = RigidbodyConstraints.None;
         menu.enabled = false;
-        /*
-        Time.timeScale = .5f;
-        Time.fixedDeltaTime = .02f * Time.timeScale;
-        yield return new WaitForSecondsRealtime(6);
-        */
         for (float i= 1; i>=0; i-=.01f)
         {
             Time.timeScale = i;
@@ -106,6 +96,11 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!MenuUI.menuOpen && !dead /*&& StartUI.started*/)
+        {
+            float mouse = mouseSpeed * Input.GetAxis("Mouse X");
+            transform.Rotate(0, mouse, 0);
+        }
 
         input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         input = Vector2.ClampMagnitude(input, 1);
@@ -161,5 +156,5 @@ public class Player : MonoBehaviour
         if (spacePressed)
             player.velocity = new Vector3(0, 5, 0);
     }
-
+    
 }
