@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
     int run = 1;
     public GameObject stamBar;
 
+    public GameObject ball;
+    bool haveBall = false;
+
 
     void Start()
     {
@@ -53,11 +56,17 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
             run = 2;
 
+        if (!MenuUI.menuOpen && !dead)
+        {
+            float mouse = mouseSpeed * Input.GetAxis("Mouse X");
+            transform.Rotate(0, mouse, 0);
+        }
         
         if ((health <= 0 || player.position.y <= -50) && !dead)
         {
             StartCoroutine(death());
         }
+        Debug.Log(haveBall);
     }
 
     IEnumerator death()
@@ -84,6 +93,10 @@ public class Player : MonoBehaviour
         {
             coll++;
         }
+    }
+    private void OnTriggerEnter(Collider collision)
+    {
+        haveBall = true;
     }
 
     private void OnCollisionExit(Collision collision)
